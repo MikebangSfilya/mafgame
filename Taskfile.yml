@@ -1,0 +1,22 @@
+version: "3"
+
+tasks:
+  test:
+    desc: Run all pytest tests
+    cmds:
+      - uv run pytest
+
+  test:quick:
+    desc: Run tests with compact output
+    cmds:
+      - uv run pytest -q
+
+  test:k:
+    desc: Run tests filtered by pytest -k expression
+    cmds:
+      - uv run pytest -k '{{.CLI_ARGS}}'
+
+  test:file:
+    desc: Run a specific test file or node id
+    cmds:
+      - uv run pytest {{.CLI_ARGS}}
