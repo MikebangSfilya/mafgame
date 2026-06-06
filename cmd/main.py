@@ -3,6 +3,7 @@ from game_rules.day_turn import DayTurn
 
 def main():
     game = DayTurn()
+    game.start_day()
     while True:
         input_comma = input("Введите команду (new_turn / end_day / quit): ")
         if input_comma == 'quit':
