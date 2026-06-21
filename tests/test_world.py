@@ -38,3 +38,19 @@ def test_initial_gangs_and_ownership_are_fixed() -> None:
         and gang.caution >= 0
         for gang in world.gangs.values()
     )
+
+
+def test_player_crews_have_visible_parameters_and_status_controls_availability() -> None:
+    world = load_initial_world()
+
+    assert set(world.crews) == {"Быки", "Тени"}
+    assert world.crews["Быки"].strength > world.crews["Тени"].strength
+    assert world.crews["Тени"].caution > world.crews["Быки"].caution
+    assert all(crew.available for crew in world.crews.values())
+
+    world.crews["Быки"].status = "injured"
+
+    assert not world.crews["Быки"].available
+    summary = world.summary()
+    assert "Барная улица: владелец=Игрок" in summary
+    assert "Быки: сила=4" in summary

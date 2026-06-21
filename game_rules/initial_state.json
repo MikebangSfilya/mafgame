@@ -63,5 +63,25 @@
       "aggression": 3,
       "caution": 4
     }
+  ],
+  "crews": [
+    {
+      "name": "Быки",
+      "strength": 4,
+      "caution": 2,
+      "loyalty": 3,
+      "brutality": 4,
+      "experience": 1,
+      "status": "ready"
+    },
+    {
+      "name": "Тени",
+      "strength": 2,
+      "caution": 4,
+      "loyalty": 4,
+      "brutality": 2,
+      "experience": 2,
+      "status": "ready"
+    }
   ]
 }

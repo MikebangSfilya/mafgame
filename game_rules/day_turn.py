@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from enum import StrEnum
 
+from game_rules.world import WorldState, load_initial_world
+
 
 class DayPhase(StrEnum):
     NOT_STARTED = "not_started"
@@ -25,6 +27,7 @@ class DayTurn:
     morning_summary: str = ""
     report_history: list[DailyReport] = field(default_factory=list)
     temporary_effects: dict[str, int] = field(default_factory=dict)
+    world: WorldState = field(default_factory=load_initial_world)
 
     def start(self) -> str:
         if self.phase is not DayPhase.NOT_STARTED:

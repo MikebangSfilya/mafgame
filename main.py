@@ -4,6 +4,7 @@ from game_rules.day_turn import DayTurn
 def main() -> None:
     game = DayTurn()
     print(game.start())
+    print(game.world.summary())
     while True:
         command = input("Command (wait / confirm / next / quit): ")
         if command == "quit":

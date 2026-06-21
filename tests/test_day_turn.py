@@ -11,6 +11,9 @@ def test_start_opens_day_one_with_morning_summary() -> None:
     assert game.day == 1
     assert game.phase is DayPhase.PLANNING
     assert summary == "Day 1: morning briefing."
+    assert len(game.world.districts) == 4
+    assert len(game.world.gangs) == 3
+    assert len(game.world.crews) == 2
 
 
 def test_confirm_rejects_invalid_orders_and_locks_valid_orders() -> None:
