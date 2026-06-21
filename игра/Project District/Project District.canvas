@@ -1,0 +1,27 @@
+{
+	"nodes":[
+		{"id":"summary","type":"file","file":"игра/Project District/spec-summary.md","x":-120,"y":-220,"width":340,"height":240},
+		{"id":"brief","type":"file","file":"игра/Project District/product-brief.md","x":320,"y":-220,"width":340,"height":240},
+		{"id":"requirements","type":"file","file":"игра/Project District/requirements/_index.md","x":-560,"y":120,"width":340,"height":260},
+		{"id":"architecture","type":"file","file":"игра/Project District/architecture/_index.md","x":-120,"y":120,"width":340,"height":260},
+		{"id":"epics","type":"file","file":"игра/Project District/epics/_index.md","x":320,"y":120,"width":340,"height":260},
+		{"id":"roadmap","type":"file","file":"игра/Project District/roadmap/roadmap.md","x":-560,"y":500,"width":340,"height":260},
+		{"id":"kanban","type":"file","file":"игра/Project District/roadmap/Kanban.md","x":-120,"y":500,"width":340,"height":260},
+		{"id":"visuals","type":"file","file":"игра/Project District/visualizations.md","x":320,"y":500,"width":340,"height":260},
+		{"id":"dataview","type":"file","file":"игра/Project District/dataview-index.md","x":760,"y":120,"width":340,"height":260},
+		{"id":"principle","type":"text","text":"# Главный принцип\n\nКаждое действие должно иметь цену.\n\n- Деньги дают силу, но повышают напряжение.\n- Атака дает территорию, но зовет полицию.\n- Осторожность снижает риск, но замедляет рост.\n- Жестокость помогает давить, но создает врагов.","x":760,"y":-220,"width":340,"height":240},
+		{"id":"overview","type":"file","file":"игра/Project District/00-Обзор.md","x":-560,"y":-220,"width":340,"height":240}
+	],
+	"edges":[
+		{"id":"e-overview-summary","fromNode":"overview","fromSide":"right","toNode":"summary","toSide":"left"},
+		{"id":"e-summary-brief","fromNode":"summary","fromSide":"right","toNode":"brief","toSide":"left"},
+		{"id":"e-brief-requirements","fromNode":"brief","fromSide":"bottom","toNode":"requirements","toSide":"top"},
+		{"id":"e-requirements-architecture","fromNode":"requirements","fromSide":"right","toNode":"architecture","toSide":"left"},
+		{"id":"e-architecture-epics","fromNode":"architecture","fromSide":"right","toNode":"epics","toSide":"left"},
+		{"id":"e-epics-roadmap","fromNode":"epics","fromSide":"bottom","toNode":"roadmap","toSide":"top"},
+		{"id":"e-roadmap-kanban","fromNode":"roadmap","fromSide":"right","toNode":"kanban","toSide":"left"},
+		{"id":"e-kanban-visuals","fromNode":"kanban","fromSide":"right","toNode":"visuals","toSide":"left"},
+		{"id":"e-brief-principle","fromNode":"brief","fromSide":"right","toNode":"principle","toSide":"left"},
+		{"id":"e-dataview-epics","fromNode":"dataview","fromSide":"left","toNode":"epics","toSide":"right"}
+	]
+}
