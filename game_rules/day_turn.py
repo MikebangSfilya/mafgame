@@ -1,91 +1,75 @@
-import dataclasses
+from dataclasses import dataclass, field
 from enum import StrEnum
-from pprint import pp
 
 
 class DayPhase(StrEnum):
-    GameStart = 'Start Game'
-    DayStart = 'MORNING PHASE'
-    DayEnd = 'END DAY PHASE'
-    Planning = 'PLAN PHASE'
-    InProgress = 'InProgress Phase'
-    NewDay = 'NEW DAY PHASE STARTED'
+    NOT_STARTED = "not_started"
+    PLANNING = "planning"
+    EXECUTION = "execution"
+    REPORT = "report"
 
-class Command(StrEnum):
-    endDay = 'end_day'
-    newTurn = 'new_turn'
 
-@dataclasses.dataclass
+@dataclass(frozen=True)
 class DailyReport:
+    day: int
     title: str
     content: str
 
-#TODO: Rewrite to the most simple print and debud defs
-@dataclasses.dataclass
+
+@dataclass
 class DayTurn:
-    daily_report : DailyReport | None = None
-    num_day : int | None = None
-    turn_count : int | None = None
-    local_turn_count : int | None = None
-    day_started : bool = False
-    order_phase : list[str] = dataclasses.field(default_factory=lambda:  [
-        DayPhase.DayStart,
-        DayPhase.Planning,
-        DayPhase.InProgress,
-        DayPhase.DayEnd
-    ])
-    day_phase: str = ""
-    report_history: list[DailyReport] = dataclasses.field(default_factory=list)
-    def to_dict(self):
-        return dataclasses.asdict(self)
-    def start_day(self):
-        if not self.day_started:
-            self.day_started = True
-            self.day_phase = DayPhase.GameStart
-            self.num_day = 0
-            self.turn_count = 0
-            self.local_turn_count = 0
-            print("Game started")
-        else:
-            print("Game already started")
+    day: int = 0
+    phase: DayPhase = DayPhase.NOT_STARTED
+    orders: list[str] = field(default_factory=list)
+    orders_locked: bool = False
+    morning_summary: str = ""
+    report_history: list[DailyReport] = field(default_factory=list)
+    temporary_effects: dict[str, int] = field(default_factory=dict)
 
-    def new_turn(self, input_comma: str):
-        if input_comma == Command.endDay:
-            self.end_day()
-            print(DayPhase.NewDay)
-        elif input_comma == Command.newTurn:
-            if self.local_turn_count == 3:
-                self.end_day()
-                self.local_turn_count = 0
-            elif self.local_turn_count == 0:
-                a =DayPhase.DayStart
-                print(DayPhase.DayStart)
-                self.turn_count += 1
-                self.local_turn_count += 1
-                self.create_daily_report(a)
-            else:
-                a = self.order_phase[self.local_turn_count]
-                self.turn_count += 1
-                self.local_turn_count += 1
-                self.create_daily_report(self.order_phase[self.local_turn_count])
-                print(a)
+    def start(self) -> str:
+        if self.phase is not DayPhase.NOT_STARTED:
+            raise RuntimeError("Game already started")
+        self.day = 1
+        self.phase = DayPhase.PLANNING
+        self.morning_summary = self._morning_summary()
+        return self.morning_summary
 
-        else:
-            raise ValueError(f'Unknown input {input_comma}')
-    def end_day(self):
-        self.turn_count += 1
-        self.day_phase = DayPhase.DayEnd
-        print(self.day_phase)
-        self.num_day += 1
-        self.create_daily_report(self.day_phase)
-        pp(self.report_history)
-        pp(f'Day: {self.num_day}')
-        self.report_history = []
+    def assign_orders(self, orders: list[str]) -> None:
+        if self.phase is not DayPhase.PLANNING or self.orders_locked:
+            raise RuntimeError("Orders cannot be changed now")
+        if unknown := set(orders) - {"wait"}:
+            raise ValueError(f"Unknown orders: {', '.join(sorted(unknown))}")
+        self.orders = orders.copy()
 
-    def create_daily_report(self, phase: str) -> None:
+    def confirm_day(self) -> DailyReport:
+        if self.phase is not DayPhase.PLANNING:
+            raise RuntimeError("Day can only be confirmed during planning")
+        self.assign_orders(self.orders)
+        self.orders_locked = True
+        self.phase = DayPhase.EXECUTION
         report = DailyReport(
-            title=f'Turn {self.turn_count}',
-            content=f'Turn {self.turn_count}, Phase: {phase}',
+            day=self.day,
+            title=f"Day {self.day} report",
+            content=f"Resolved {len(self.orders)} order(s).",
         )
         self.report_history.append(report)
+        self.phase = DayPhase.REPORT
+        return report
 
+    def next_day(self) -> str:
+        if self.phase is not DayPhase.REPORT:
+            raise RuntimeError("Finish the current day first")
+        self.day += 1
+        self.temporary_effects = {
+            name: days - 1
+            for name, days in self.temporary_effects.items()
+            if days > 1
+        }
+        self.orders.clear()
+        self.orders_locked = False
+        self.phase = DayPhase.PLANNING
+        self.morning_summary = self._morning_summary()
+        return self.morning_summary
+
+    def _morning_summary(self) -> str:
+        return f"Day {self.day}: morning briefing."

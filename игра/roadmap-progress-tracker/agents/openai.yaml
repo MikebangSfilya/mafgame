@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roadmap Progress Tracker"
+  short_description: "Сверка roadmap, backlog и worklog"
+  default_prompt: "Audit implementation against the roadmap, update Kanban and backlog, and append a factual worklog entry for the linked project."

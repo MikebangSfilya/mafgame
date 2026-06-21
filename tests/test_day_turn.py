@@ -1,38 +1,50 @@
+import pytest
 
-from game_rules.day_turn import DayTurn
+from game_rules.day_turn import DayPhase, DayTurn
 
 
-def test_start_day_initializes_state() -> None:
+def test_start_opens_day_one_with_morning_summary() -> None:
     game = DayTurn()
 
-    game.start_day()
+    summary = game.start()
 
-    assert game.day_started is True
-    assert game.day_phase == "Starring Game"
-    assert game.num_day == 1
-    assert game.turn_count == 1
-    assert game.local_turn_count == 0
+    assert game.day == 1
+    assert game.phase is DayPhase.PLANNING
+    assert summary == "Day 1: morning briefing."
 
 
-def test_new_turn_adds_report_history() -> None:
+def test_confirm_rejects_invalid_orders_and_locks_valid_orders() -> None:
     game = DayTurn()
-    game.start_day()
+    game.start()
 
-    game.new_turn("new_turn")
+    with pytest.raises(ValueError, match="Unknown orders: attack"):
+        game.assign_orders(["attack"])
 
-    assert game.turn_count == 2
-    assert game.local_turn_count == 1
-    assert len(game.report_history) == 1
-    assert game.report_history[0].title == "Turn 2"
+    game.orders = ["attack"]
+    with pytest.raises(ValueError, match="Unknown orders: attack"):
+        game.confirm_day()
+
+    game.assign_orders(["wait", "wait"])
+    report = game.confirm_day()
+
+    assert game.orders_locked is True
+    assert game.phase is DayPhase.REPORT
+    assert report.content == "Resolved 2 order(s)."
+    with pytest.raises(RuntimeError, match="cannot be changed"):
+        game.assign_orders([])
 
 
-def test_new_turn_rejects_unknown_command() -> None:
-    game = DayTurn()
-    game.start_day()
+def test_three_days_complete_with_reports_and_updated_effects() -> None:
+    game = DayTurn(temporary_effects={"injured": 2, "alert": 1})
+    game.start()
 
-    try:
-        game.new_turn("bad_command")
-    except ValueError as exc:
-        assert "Unknown input bad_command" in str(exc)
-    else:
-        raise AssertionError("ValueError was not raised")
+    for expected_day in range(1, 4):
+        game.assign_orders([])
+        report = game.confirm_day()
+        assert report.day == expected_day
+        if expected_day < 3:
+            assert game.next_day() == f"Day {expected_day + 1}: morning briefing."
+
+    assert game.day == 3
+    assert len(game.report_history) == 3
+    assert game.temporary_effects == {}

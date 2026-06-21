@@ -1,0 +1,90 @@
+{
+  "session_id": "SPEC-project-district-2026-05-27",
+  "seed_input": "Локальная криминальная пошаговая стратегия с непрямым управлением малой бандой. Игрок раздает приказы бригадам, получает отчеты и управляет контролем районов, деньгами, риском полиции и реакциями врагов.",
+  "input_type": "text",
+  "timestamp": "2026-05-27T20:54:00+03:00",
+  "mode": "auto",
+  "complexity": "moderate",
+  "depth": "standard",
+  "focus_areas": [
+    "core loop",
+    "indirect control",
+    "district simulation",
+    "text reports",
+    "vertical slice"
+  ],
+  "spec_type": "platform",
+  "iteration_count": 0,
+  "iteration_history": [],
+  "seed_analysis": {
+    "problem_statement": "Нужно превратить длинный дизайн-док в исполнимую спецификацию и дорожную карту для маленького прототипа криминальной стратегии, где основной интерес рождается из непрямых приказов и последствий.",
+    "target_users": [
+      "разработчик прототипа",
+      "геймдизайнер",
+      "тестировщик ранней версии"
+    ],
+    "domain": "turn-based strategy game prototype",
+    "constraints": [
+      "версия 0.1 должна быть маленькой",
+      "нельзя начинать с большой архитектуры и большого города",
+      "первый критерий успеха - интересный цикл приказов и отчетов"
+    ],
+    "dimensions": [
+      "игровой цикл",
+      "модель данных",
+      "расчет исходов",
+      "ИИ врагов и полиция",
+      "вертикальный срез"
+    ]
+  },
+  "has_codebase": false,
+  "refined_requirements_file": "refined-requirements.json",
+  "phasesCompleted": [
+    {
+      "phase": 1,
+      "name": "discovery",
+      "output_file": "spec-config.json",
+      "completed_at": "2026-05-27T20:54:00+03:00"
+    },
+    {
+      "phase": 1.5,
+      "name": "requirement-clarification",
+      "output_file": "refined-requirements.json",
+      "discussion_rounds": 0,
+      "completed_at": "2026-05-27T20:54:00+03:00"
+    },
+    {
+      "phase": 2,
+      "name": "product-brief",
+      "output_file": "product-brief.md",
+      "completed_at": "2026-05-27T20:54:00+03:00"
+    },
+    {
+      "phase": 3,
+      "name": "requirements",
+      "output_dir": "requirements/",
+      "output_index": "requirements/_index.md",
+      "completed_at": "2026-05-27T20:54:00+03:00"
+    },
+    {
+      "phase": 4,
+      "name": "architecture",
+      "output_dir": "architecture/",
+      "output_index": "architecture/_index.md",
+      "completed_at": "2026-05-27T20:54:00+03:00"
+    },
+    {
+      "phase": 5,
+      "name": "epics",
+      "output_dir": "epics/",
+      "output_index": "epics/_index.md",
+      "completed_at": "2026-05-27T20:54:00+03:00"
+    },
+    {
+      "phase": 6,
+      "name": "readiness-check",
+      "output_file": "readiness-report.md",
+      "completed_at": "2026-05-27T20:54:00+03:00"
+    }
+  ]
+}
