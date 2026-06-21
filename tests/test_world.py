@@ -21,3 +21,20 @@ def test_initial_districts_form_fixed_two_by_two_map() -> None:
         and district.tension >= 0
         for district in world.districts.values()
     )
+
+
+def test_initial_gangs_and_ownership_are_fixed() -> None:
+    world = load_initial_world()
+
+    assert set(world.gangs) == {"Игрок", "Южные", "Крысы"}
+    assert world.districts_owned_by("Игрок") == ("Барная улица",)
+    assert world.districts_owned_by("Южные") == ("Рынок",)
+    assert world.districts_owned_by("Крысы") == ("Старые дома",)
+    assert world.districts["Склады"].owner is None
+    assert all(
+        gang.money >= 0
+        and gang.strength >= 0
+        and gang.aggression >= 0
+        and gang.caution >= 0
+        for gang in world.gangs.values()
+    )

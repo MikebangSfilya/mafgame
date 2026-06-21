@@ -40,5 +40,28 @@
       "feature": "Логистика",
       "neighbors": ["Рынок", "Старые дома"]
     }
+  ],
+  "gangs": [
+    {
+      "name": "Игрок",
+      "money": 10,
+      "strength": 3,
+      "aggression": 2,
+      "caution": 3
+    },
+    {
+      "name": "Южные",
+      "money": 8,
+      "strength": 4,
+      "aggression": 4,
+      "caution": 2
+    },
+    {
+      "name": "Крысы",
+      "money": 6,
+      "strength": 2,
+      "aggression": 3,
+      "caution": 4
+    }
   ]
 }
