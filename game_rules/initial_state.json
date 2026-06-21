@@ -1,0 +1,44 @@
+{
+  "districts": [
+    {
+      "name": "Барная улица",
+      "owner": "Игрок",
+      "income": 3,
+      "defense": 2,
+      "heat": 1,
+      "tension": 1,
+      "feature": "Ночная жизнь",
+      "neighbors": ["Рынок", "Старые дома"]
+    },
+    {
+      "name": "Рынок",
+      "owner": "Южные",
+      "income": 4,
+      "defense": 2,
+      "heat": 2,
+      "tension": 2,
+      "feature": "Торговля",
+      "neighbors": ["Барная улица", "Склады"]
+    },
+    {
+      "name": "Старые дома",
+      "owner": "Крысы",
+      "income": 2,
+      "defense": 3,
+      "heat": 1,
+      "tension": 2,
+      "feature": "Укрытия",
+      "neighbors": ["Барная улица", "Склады"]
+    },
+    {
+      "name": "Склады",
+      "owner": null,
+      "income": 3,
+      "defense": 1,
+      "heat": 0,
+      "tension": 1,
+      "feature": "Логистика",
+      "neighbors": ["Рынок", "Старые дома"]
+    }
+  ]
+}
